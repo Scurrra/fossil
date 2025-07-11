@@ -14,8 +14,8 @@ class Fossil::Route
   property endpoints : Hash(Fossil::Method, Fossil::Endpoint)
 
   def initialize(path = nil, parameter = nil)
-    path.nil? && parameter.nil? && raise "Path fragment is not provided"
-    !path.nil? && !parameter.nil? && raise "Path fragment can be either constant string or path parameter"
+    path.nil? && parameter.nil? && raise Fossil::Error::RouteParamError.new("Path fragment is not provided")
+    !path.nil? && !parameter.nil? && raise Fossil::Error::RouteParamError.new("Path fragment can be either route string or path parameter")
 
     @path = path
     @parameter = parameter
@@ -40,8 +40,12 @@ class Fossil::Route
       parameter_t = Fossil::Param::PathParamTypeEnum.parse(t)
 
       @param_children.each do |child_t, child|
-        if child_t == parameter_t && child.parameter == parameter
-          return other == "" ? child : child / other
+        if child_t == parameter_t
+          if child.parameter == parameter
+            return other == "" ? child : child / other
+          else
+            raise Fossil::Error::RouteParamError.new("In each node path parameters with the same type must have the same name. Parameter of the same type with name `#{child.parameter}` was provided in another route")
+          end
         end
       end
 
@@ -101,8 +105,13 @@ class Fossil::Route
     if !is_parsed && @param_children.has_key?(Fossil::Param::PathParamTypeEnum::String)
       child = @param_children[Fossil::Param::PathParamTypeEnum::String]
       if param = child.parameter
+        is_parsed = true
         path_params[param] = current
       end
+    end
+
+    unless is_parsed
+      raise Fossil::Error::RouteTraceError
     end
     return path == "" ? {child, path_params} : child.trace(path, path_params)
   end
