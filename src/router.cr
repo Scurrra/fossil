@@ -1,6 +1,10 @@
 require "http/server"
 require "uuid"
 
+require "./methods"
+require "./errors"
+require "./params"
+
 abstract class Fossil::Endpoint
   abstract def call(context : HTTP::Server::Context, path_params : Hash(String, Fossil::Param::PathParamType))
 end
@@ -11,7 +15,7 @@ class Fossil::Route
 
   property children : Array(Route)
   property param_children : Hash(Fossil::Param::PathParamTypeEnum, Route)
-  property endpoints : Hash(Fossil::Method, Fossil::Endpoint)
+  property endpoints : Hash(Fossil::MethodsEnum, Fossil::Endpoint)
 
   def initialize(path = nil, parameter = nil)
     path.nil? && parameter.nil? && raise Fossil::Error::RouteParamError.new("Path fragment is not provided")
@@ -22,7 +26,7 @@ class Fossil::Route
 
     @children = [] of Route
     @param_children = {} of Fossil::Param::PathParamTypeEnum => Route
-    @endpoints = {} of Fossil::Method => Fossil::Endpoint
+    @endpoints = {} of Fossil::MethodsEnum => Fossil::Endpoint
   end
 
   def /(other : String) : self

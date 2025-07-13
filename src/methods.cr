@@ -1,14 +1,17 @@
-enum Fossil::Method
+enum Fossil::MethodsEnum
   GET
   POST
-  PATCH
+  PUT
+  HEAD
   DELETE
+  PATCH
+  OPTIONS
 end
 
-annotation Fossil::GET; end
-
-annotation Fossil::POST; end
-
-annotation Fossil::PATCH; end
-
-annotation Fossil::DELETE; end
+annotation GET; end
+annotation POST; end
+annotation PUT; end
+annotation HEAD; end
+annotation DELETE; end
+annotation PATCH; end
+annotation OPTIONS; end

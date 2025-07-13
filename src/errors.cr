@@ -1,4 +1,4 @@
-module Fossil::Errors
+module Fossil::Error
   class RouteParamError < Exception
     def initialize(message = "Wrong route parameter")
       super(message)

@@ -1,5 +1,5 @@
 module Fossil::Param
-  alias PathParamType = Int | UUID | String
+  alias PathParamType = Int32 | UUID | String
 
   enum PathParamTypeEnum
     Int
@@ -11,12 +11,4 @@ module Fossil::Param
   annotation Query; end
   annotation Form; end
   annotation File; end
-
-  class Value(T)
-    @name : String
-    @value : T
-
-    def initialize(@name, @value)
-    end
-  end
 end
