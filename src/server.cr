@@ -17,12 +17,10 @@ class Fossil::Server
       method = Fossil::MethodsEnum.parse context.request.method
       path = context.request.path[1..]
       if @root.path != ""
-        if root_path = @root.path
-          if path.starts_with? root_path
-            path = path[@root.path.size + 1..]
-          else
-            context.response.respond_with_status HTTP::Status::BAD_GATEWAY
-          end
+        if path.starts_with?(root_path)
+          path = path[root_path.size + 1..]
+        else
+          context.response.respond_with_status HTTP::Status::BAD_GATEWAY
         end
       end
       router, path_params = @root.trace path
