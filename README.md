@@ -20,6 +20,10 @@ Fossil is a simple framework for building APIs.
 require "fossil"
 ```
 
+## TODO
+- Proper testing.
+- Better documentation.
+
 ## Contributing
 
 1. Fork it (<https://github.com/your-github-user/fossil/fork>)

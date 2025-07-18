@@ -1,10 +1,11 @@
-require "./router"
-require "./handler"
-
 require "http/server"
 require "http/status"
 require "socket"
 
+require "./router"
+require "./handler"
+
+# Wrapper around `HTTP::Server` that holds the root `Fossil::Router` for the app.
 class Fossil::Server
   getter root : Fossil::Router
   getter http_server : HTTP::Server
@@ -14,7 +15,15 @@ class Fossil::Server
 
     @http_server = HTTP::Server.new handlers do |context|
       method = Fossil.MethodsEnum.parse context.request.method
-      router, path_params = @root.trace context.request.path
+      path = context.request.path[1..]
+      if @root.path != ""
+        if path.starts_with? @root.path
+          path = [@root.path.size + 1..]
+        else
+          context.response.respond_with_status HTTP::Status::BAD_GATEWAY
+        end
+      end
+      router, path_params = @root.trace path
 
       unless router.endpoints.has_key?(method)
         context.response.respond_with_status(HTTP::Status::METHOD_NOT_ALLOWED, "No #{context.request.method} for this path")
