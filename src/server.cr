@@ -14,7 +14,7 @@ class Fossil::Server
     @root = Fossil::Router.new root_path
 
     @http_server = HTTP::Server.new handlers do |context|
-      method = Fossil.MethodsEnum.parse context.request.method
+      method = Fossil::MethodsEnum.parse context.request.method
       path = context.request.path[1..]
       if @root.path != ""
         if path.starts_with? @root.path
