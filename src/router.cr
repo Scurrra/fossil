@@ -136,7 +136,7 @@ class Fossil::Router
     end
 
     unless is_parsed
-      raise Fossil::Error::RouteTraceError
+      raise Fossil::Error::RouteTraceError.new
     end
     return path == "" ? {child, path_params} : child.trace(path, path_params)
   end
