@@ -20,24 +20,35 @@ macro method_added(endpoint_fun)
           end
       
           {% for arg in endpoint_fun.args %}
-            {% if path_ann = arg.annotation(Fossil::Param::Path) %}
-              {% if !path_ann.named_args.has_key?(:name) %}
-                %path_ann[:name] = {{arg.name}}
+            {% if path_ann_shadowed = arg.annotation(Fossil::Param::Path) %}
+              %path_ann = {{arg.annotation(Fossil::Param::Path)}}
+              
+              {% if !path_ann_shadowed.named_args.has_key?(:name) %}
+                %path_ann[:name] = {{arg.name.stringify}}
               {% end %}
+              
               {{arg.internal_name.id}} = path_params[%path_ann[:name]]
-            {% elsif query_ann = arg.annotation(Fossil::Param::Query) %}
-              {% if !query_ann.named_args.has_key?(:name) %}
-                %query_ann[:name] = {{arg.name}}
+            
+            {% elsif query_ann_shadowed = arg.annotation(Fossil::Param::Query) %}
+              %query_ann = {{arg.annotation(Fossil::Param::Query)}}
+              
+              {% if !query_ann_shadowed.named_args.has_key?(:name) %}
+                %query_ann[:name] = {{arg.name.stringify}}
               {% end %}
+              
               {{arg.internal_name.id}} = if context.request.query_params.has_key?(%query_ann[:name])
                 {{arg.restriction}}.new context.request.query_params[%query_ann[:name]]
-              elsif query_ann.named_args.has_key?(:alias)
+              elsif %query_ann.named_args.has_key?(:alias)
                 {{arg.restriction}}.new context.request.query_params[%query_ann[:alias]]
               end
-            {% elsif form_ann = arg.annotation(Fossil::Param::Form) %}
-              {% if !form_ann.named_args.has_key?(:name) %}
-                %form_ann[:name] = {{arg.name}}
+            
+            {% elsif form_ann_shadowed = arg.annotation(Fossil::Param::Form) %}
+              %form_ann = {{arg.annotation(Fossil::Param::Form)}}
+
+              {% if !form_ann_shadowed.named_args.has_key?(:name) %}
+                %form_ann[:name] = {{arg.name.stringify}}
               {% end %}
+
               {{arg.internal_name.id}} = if form_params = context.request.form_params?
                 if form_params.has_key?(%form_ann[:name])
                   {{arg.restriction}}.new form_params[%form_ann[:name]]
@@ -51,10 +62,14 @@ macro method_added(endpoint_fun)
                   {{arg.restriction}}.new form_data[%form_ann[:alias]]
                 end
               end
-            {% elsif file_ann = arg.annotation(Fossil::Param::File) %}
-              {% if !file_ann.named_args.has_key?(:name) %}
-                %file_ann[:name] = {{arg.name}}
+
+            {% elsif file_ann_shadowed = arg.annotation(Fossil::Param::File) %}
+              %file_ann = {{arg.annotation(Fossil::Param::File)}}
+
+              {% if !file_ann_shadowed.named_args.has_key?(:name) %}
+                %file_ann[:name] = {{arg.name.stringify}}
               {% end %}
+
               {{arg.internal_name.id}} = if form_data.has_key?(%file_ann[:name])
                 File.tempfile(form_data[%file_ann[:name]].filename || "upload") do |tmpfile|
                   IO.copy(form_data[%file_ann[:name]].body, file)
@@ -62,6 +77,7 @@ macro method_added(endpoint_fun)
               else
                 nil
               end
+
             {% end %}
           {% end %}
 
