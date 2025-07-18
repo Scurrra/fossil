@@ -3,6 +3,7 @@ require "./params"
 require "./router"
 require "./errors"
 require "./handler"
+require "./server"
 
 # A simple framework for building APIs.
 module Fossil

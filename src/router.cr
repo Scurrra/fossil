@@ -9,12 +9,12 @@ abstract class Fossil::Endpoint
   abstract def call(context : HTTP::Server::Context, path_params : Hash(String, Fossil::Param::PathParamType))
 end
 
-class Fossil::Route
+class Fossil::Router
   getter path : Nil | String
   getter parameter : Nil | String
 
-  property children : Array(Route)
-  property param_children : Hash(Fossil::Param::PathParamTypeEnum, Route)
+  property children : Array(Router)
+  property param_children : Hash(Fossil::Param::PathParamTypeEnum, Router)
   property endpoints : Hash(Fossil::MethodsEnum, Fossil::Endpoint)
 
   def initialize(path = nil, parameter = nil)
@@ -24,8 +24,8 @@ class Fossil::Route
     @path = path
     @parameter = parameter
 
-    @children = [] of Route
-    @param_children = {} of Fossil::Param::PathParamTypeEnum => Route
+    @children = [] of Router
+    @param_children = {} of Fossil::Param::PathParamTypeEnum => Router
     @endpoints = {} of Fossil::MethodsEnum => Fossil::Endpoint
   end
 
@@ -53,7 +53,7 @@ class Fossil::Route
         end
       end
 
-      new_child = Route.new parameter: parameter
+      new_child = Router.new parameter: parameter
       @param_children[parameter_t] = new_child
       return other == "" ? new_child : new_child / other
     else
@@ -63,7 +63,7 @@ class Fossil::Route
         end
       end
 
-      new_child = Route.new path: path
+      new_child = Router.new path: path
       @children << new_child
       return other == "" ? new_child : new_child / other
     end
