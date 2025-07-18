@@ -1,7 +1,7 @@
 # Endpoint parameters.
 module Fossil::Param
   # Union of possible types of path parameters.
-  private alias PathParamType = Int32 | UUID | String
+  alias PathParamType = Int32 | UUID | String
 
   # Enum of possible types of path parameters.
   enum PathParamTypeEnum
