@@ -1,5 +1,7 @@
 name: fossil
 version: 0.1.0
+description: |
+  A simple API framework in Crystal.
 
 authors:
   - Scurrra <iscurrra@gmail.com>

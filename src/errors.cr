@@ -7,7 +7,7 @@ module Fossil::Error
     end
   end
 
-  # Error raised when path can not be traced from the router. 
+  # Error raised when path can not be traced from the router.
   class RouteTraceError < Exception
     def initialize(message = "Cannot trace the route")
       super(message)

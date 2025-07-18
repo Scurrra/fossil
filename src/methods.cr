@@ -1,5 +1,5 @@
 # Possible `HTTP::Request` methods.
-# 
+#
 # Annotations of the same names are used for identifying endpoint functions.
 # This annotations are eximined on having unnamed parameter of type `Fossil::Router`.
 #

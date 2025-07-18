@@ -30,10 +30,8 @@ class Fossil::Router
   # `Endpoint`s at the route that is resolved to current `Router`.
   property endpoints : Hash(Fossil::MethodsEnum, Fossil::Endpoint)
 
-  # :showdoc:
-  #
-  # Initializer for `Router`. Hidden from calling to not be misused.
-  private def initialize(path = nil, parameter = nil)
+  # Initializer for `Router`.
+  def initialize(path = nil, parameter = nil)
     path.nil? && parameter.nil? && raise Fossil::Error::RouteParamError.new("Path fragment is not provided")
     !path.nil? && !parameter.nil? && raise Fossil::Error::RouteParamError.new("Path fragment can be either route string or path parameter")
 
