@@ -16,8 +16,8 @@ class Fossil::Server
     @http_server = HTTP::Server.new handlers do |context|
       method = Fossil::MethodsEnum.parse context.request.method
       path = context.request.path[1..]
-      if @root.path != ""
-        if path.starts_with? @root.path
+      if @root.path != "" && root_path = @root.path
+        if path.starts_with? root_path
           path = [@root.path.size + 1..]
         else
           context.response.respond_with_status HTTP::Status::BAD_GATEWAY
