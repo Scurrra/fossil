@@ -13,7 +13,7 @@ macro method_added(endpoint_fun)
         def initialize
         end
     
-        def call(context : HTTP::Server::Context, path_params : Hash(String, Fossil::Param::PathParamType)) : {{ endpoint_fun.return_type }}
+        def call(context : HTTP::Server::Context, path_params : Hash(String, Fossil::Param::PathParamType))
           form_data = {} of String => HTTP::FormData::Part
           HTTP::FormData.parse(context.request) do |part|
             form_data[part.name] = part
