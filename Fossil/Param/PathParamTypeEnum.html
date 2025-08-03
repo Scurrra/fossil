@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.16.3">
+<meta name="crystal_docs.project_version" content="0.1.0">
+<meta name="crystal_docs.project_name" content="fossil">
+
+
+
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../js/doc.js"></script>
+
+  <meta name="repository-name" content="fossil">
+  <title>Fossil::Param::PathParamTypeEnum - fossil 0.1.0</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../../index.html">
+          fossil
+        </a>
+      </h1>
+
+      <span class="project-version">
+        0.1.0
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="fossil/Fossil" data-name="fossil">
+      <a href="../../Fossil.html">Fossil</a>
+      
+        <ul>
+  
+  <li class=" " data-id="fossil/Fossil/Endpoint" data-name="fossil::endpoint">
+      <a href="../../Fossil/Endpoint.html">Endpoint</a>
+      
+    </li>
+  
+  <li class="parent " data-id="fossil/Fossil/Error" data-name="fossil::error">
+      <a href="../../Fossil/Error.html">Error</a>
+      
+        <ul>
+  
+  <li class=" " data-id="fossil/Fossil/Error/RouteParamError" data-name="fossil::error::routeparamerror">
+      <a href="../../Fossil/Error/RouteParamError.html">RouteParamError</a>
+      
+    </li>
+  
+  <li class=" " data-id="fossil/Fossil/Error/RouteTraceError" data-name="fossil::error::routetraceerror">
+      <a href="../../Fossil/Error/RouteTraceError.html">RouteTraceError</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="fossil/Fossil/MethodsEnum" data-name="fossil::methodsenum">
+      <a href="../../Fossil/MethodsEnum.html">MethodsEnum</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="fossil/Fossil/Param" data-name="fossil::param">
+      <a href="../../Fossil/Param.html">Param</a>
+      
+        <ul>
+  
+  <li class=" " data-id="fossil/Fossil/Param/File" data-name="fossil::param::file">
+      <a href="../../Fossil/Param/File.html">File</a>
+      
+    </li>
+  
+  <li class=" " data-id="fossil/Fossil/Param/Form" data-name="fossil::param::form">
+      <a href="../../Fossil/Param/Form.html">Form</a>
+      
+    </li>
+  
+  <li class=" " data-id="fossil/Fossil/Param/Path" data-name="fossil::param::path">
+      <a href="../../Fossil/Param/Path.html">Path</a>
+      
+    </li>
+  
+  <li class=" " data-id="fossil/Fossil/Param/PathParamType" data-name="fossil::param::pathparamtype">
+      <a href="../../Fossil/Param/PathParamType.html">PathParamType</a>
+      
+    </li>
+  
+  <li class=" current" data-id="fossil/Fossil/Param/PathParamTypeEnum" data-name="fossil::param::pathparamtypeenum">
+      <a href="../../Fossil/Param/PathParamTypeEnum.html">PathParamTypeEnum</a>
+      
+    </li>
+  
+  <li class=" " data-id="fossil/Fossil/Param/Query" data-name="fossil::param::query">
+      <a href="../../Fossil/Param/Query.html">Query</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="fossil/Fossil/Router" data-name="fossil::router">
+      <a href="../../Fossil/Router.html">Router</a>
+      
+    </li>
+  
+  <li class=" " data-id="fossil/Fossil/Server" data-name="fossil::server">
+      <a href="../../Fossil/Server.html">Server</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">
+    enum
+  </span> Fossil::<wbr>Param::<wbr>PathParamTypeEnum
+
+</h1>
+
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>Enum of possible types of path parameters.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      params.cr
+    
+    <br/>
+  
+
+
+
+  
+    <h2>
+      <a id="enum-members" class="anchor" href="#enum-members">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+      Enum Members
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="Int">
+        <strong>Int</strong> = <code><span class="n">0</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="UUID">
+        <strong>UUID</strong> = <code><span class="n">1</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="String">
+        <strong>String</strong> = <code><span class="n">2</span></code>
+      </dt>
+      
+    
+  </dl>
+
+
+
+  
+
+  
+
+  
+
+  
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#int%3F-instance-method" class="signature"><strong>#int?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../../Fossil/Param/PathParamTypeEnum.html#Int">Int</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#string%3F-instance-method" class="signature"><strong>#string?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../../Fossil/Param/PathParamTypeEnum.html#String">String</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#uuid%3F-instance-method" class="signature"><strong>#uuid?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../../Fossil/Param/PathParamTypeEnum.html#UUID">UUID</a></code></p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <div class="methods-inherited">
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="int?-instance-method">
+      <div class="signature">
+        
+        def <strong>int?</strong>
+
+        <a class="method-permalink" href="#int%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../../Fossil/Param/PathParamTypeEnum.html#Int">Int</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="string?-instance-method">
+      <div class="signature">
+        
+        def <strong>string?</strong>
+
+        <a class="method-permalink" href="#string%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../../Fossil/Param/PathParamTypeEnum.html#String">String</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="uuid?-instance-method">
+      <div class="signature">
+        
+        def <strong>uuid?</strong>
+
+        <a class="method-permalink" href="#uuid%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../../Fossil/Param/PathParamTypeEnum.html#UUID">UUID</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+</div>
+
+</body>
+</html>
