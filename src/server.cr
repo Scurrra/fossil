@@ -24,7 +24,7 @@ class Fossil::Server
         end
       end
       router, path_params = @root.trace path
-
+  
       unless router.endpoints.has_key?(method)
         context.response.respond_with_status(HTTP::Status::METHOD_NOT_ALLOWED, "No #{context.request.method} for this path")
       end
@@ -35,6 +35,7 @@ class Fossil::Server
       rescue exception
         context.response.respond_with_status(HTTP::Status::INTERNAL_SERVER_ERROR, exception.to_s)
       else
+        context.response.content_type = "text/plain"
         context.response.print response_data
       end
     end
