@@ -1,6 +1,7 @@
 require "./router"
 require "./params"
 require "./methods"
+require "./errors"
 
 macro method_added(endpoint_fun)
   {% for m in {GET, POST, PUT, HEAD, DELETE, PATCH, OPTIONS} %}     
@@ -15,67 +16,123 @@ macro method_added(endpoint_fun)
     
         def call(context : HTTP::Server::Context, path_params : Hash(String, Fossil::Param::PathParamType))
           form_data = {} of String => HTTP::FormData::Part
-          HTTP::FormData.parse(context.request) do |part|
-            form_data[part.name] = part
+          if context.request.body
+            HTTP::FormData.parse(context.request) do |part|
+              form_data[part.name] = part
+            end
           end
       
           {% for arg in endpoint_fun.args %}
             {% if path_ann_shadowed = arg.annotation(Fossil::Param::Path) %}
-              %path_ann = {{arg.annotation(Fossil::Param::Path)}}
               
-              {% if !path_ann_shadowed.named_args.has_key?(:name) %}
-                %path_ann[:name] = {{arg.name.stringify}}
+              begin
+              {% if path_ann_shadowed.named_args.has_key?(:name) %}
+                {{arg.internal_name.id}} = path_params[{{arg.annotation(Fossil::Param::Path)[:name]}}]
+              {% else %}
+                {{arg.internal_name.id}} = path_params[{{arg.name.stringify}}]
               {% end %}
+              rescue
+                raise Fossil::Error::ParamParseError.new "Cannot parse path parameter #{{{arg.name.stringify}}}. Parameter's name in annotation has precedence."
+              end
               
-              {{arg.internal_name.id}} = path_params[%path_ann[:name]]
-            
             {% elsif query_ann_shadowed = arg.annotation(Fossil::Param::Query) %}
-              %query_ann = {{arg.annotation(Fossil::Param::Query)}}
               
-              {% if !query_ann_shadowed.named_args.has_key?(:name) %}
-                %query_ann[:name] = {{arg.name.stringify}}
+              begin
+              {% if query_ann_shadowed.named_args.has_key?(:name) && query_ann_shadowed.named_args.has_key?(:alias) %}
+                if context.request.query_params.has_key?({{arg.annotation(Fossil::Param::Query)[:name]}})
+                  {{arg.internal_name.id}} = {{arg.restriction}}.new context.request.query_params[{{arg.annotation(Fossil::Param::Query)[:name]}}]
+                elsif context.request.query_params.has_key?({{arg.annotation(Fossil::Param::Query)[:alias]}})
+                  {{arg.internal_name.id}} = {{arg.restriction}}.new context.request.query_params[{{arg.annotation(Fossil::Param::Query)[:alias]}}]
+                else
+                  {{arg.internal_name.id}} = {{arg.restriction}}.new context.request.query_params[{{arg.name.stringify}}]
+                end
+              {% elsif query_ann_shadowed.named_args.has_key?(:name) %}
+                if context.request.query_params.has_key?({{arg.annotation(Fossil::Param::Query)[:name]}})
+                  {{arg.internal_name.id}} = {{arg.restriction}}.new context.request.query_params[{{arg.annotation(Fossil::Param::Query)[:name]}}]
+                else
+                  {{arg.internal_name.id}} = {{arg.restriction}}.new context.request.query_params[{{arg.name.stringify}}]
+                end
+              {% else %}
+                {{arg.internal_name.id}} = {{arg.restriction}}.new context.request.query_params[{{arg.name.stringify}}]
               {% end %}
-              
-              {{arg.internal_name.id}} = if context.request.query_params.has_key?(%query_ann[:name])
-                {{arg.restriction}}.new context.request.query_params[%query_ann[:name]]
-              elsif %query_ann.named_args.has_key?(:alias)
-                {{arg.restriction}}.new context.request.query_params[%query_ann[:alias]]
+              rescue
+                raise Fossil::Error::ParamParseError.new "Cannot parse query parameter #{{{arg.name.stringify}}}."
               end
             
             {% elsif form_ann_shadowed = arg.annotation(Fossil::Param::Form) %}
-              %form_ann = {{arg.annotation(Fossil::Param::Form)}}
 
-              {% if !form_ann_shadowed.named_args.has_key?(:name) %}
-                %form_ann[:name] = {{arg.name.stringify}}
-              {% end %}
+              if form_params = context.request.form_params?
+                
+                begin
+                {% if form_ann_shadowed.named_args.has_key?(:name) && form_ann_shadowed.named_args.has_key?(:alias) %}
+                  if context.request.form_params.has_key?({{arg.annotation(Fossil::Param::Form)[:name]}})
+                    {{arg.internal_name.id}} = {{arg.restriction}}.new context.request.form_params[{{arg.annotation(Fossil::Param::Form)[:name]}}]
+                  elsif context.request.form_params.has_key?({{arg.annotation(Fossil::Param::Form)[:alias]}})
+                    {{arg.internal_name.id}} = {{arg.restriction}}.new context.request.form_params[{{arg.annotation(Fossil::Param::Form)[:alias]}}]
+                  else
+                    {{arg.internal_name.id}} = {{arg.restriction}}.new context.request.form_params[{{arg.name.stringify}}]
+                  end
+                {% elsif form_ann_shadowed.named_args.has_key?(:name) %}
+                  if context.request.form_params.has_key?({{arg.annotation(Fossil::Param::Form)[:name]}})
+                    {{arg.internal_name.id}} = {{arg.restriction}}.new context.request.form_params[{{arg.annotation(Fossil::Param::Form)[:name]}}]
+                  else
+                    {{arg.internal_name.id}} = {{arg.restriction}}.new context.request.form_params[{{arg.name.stringify}}]
+                  end
+                {% else %}
+                  {{arg.internal_name.id}} = {{arg.restriction}}.new context.request.form_params[{{arg.name.stringify}}]
+                {% end %}
+                rescue
+                  raise Fossil::Error::ParamParseError.new "Cannot parse form parameter #{{{arg.name.stringify}}}."
+                end
 
-              {{arg.internal_name.id}} = if form_params = context.request.form_params?
-                if form_params.has_key?(%form_ann[:name])
-                  {{arg.restriction}}.new form_params[%form_ann[:name]]
-                elsif form_params.has_key?(:alias)
-                  {{arg.restriction}}.new form_params[%form_ann[:alias]]
+              else
+              
+                begin
+                {% if form_ann_shadowed.named_args.has_key?(:name) && form_ann_shadowed.named_args.has_key?(:alias) %}
+                  if form_data.has_key?({{arg.annotation(Fossil::Param::Form)[:name]}})
+                    {{arg.internal_name.id}} = {{arg.restriction}}.new form_data[{{arg.annotation(Fossil::Param::Form)[:name]}}]
+                  elsif form_data.has_key?({{arg.annotation(Fossil::Param::Form)[:alias]}})
+                    {{arg.internal_name.id}} = {{arg.restriction}}.new form_data[{{arg.annotation(Fossil::Param::Form)[:alias]}}]
+                  else
+                    {{arg.internal_name.id}} = {{arg.restriction}}.new form_data[{{arg.name.stringify}}]
+                  end
+                {% elsif form_ann_shadowed.named_args.has_key?(:name) %}
+                  if form_data.has_key?({{arg.annotation(Fossil::Param::Form)[:name]}})
+                    {{arg.internal_name.id}} = {{arg.restriction}}.new form_data[{{arg.annotation(Fossil::Param::Form)[:name]}}]
+                  else
+                    {{arg.internal_name.id}} = {{arg.restriction}}.new form_data[{{arg.name.stringify}}]
+                  end
+                {% else %}
+                  {{arg.internal_name.id}} = {{arg.restriction}}.new form_data[{{arg.name.stringify}}]
+                {% end %}
+                rescue
+                  raise Fossil::Error::ParamParseError.new "Cannot parse form parameter #{{{arg.name.stringify}}}."
                 end
-              elsif
-                if form_data.has_key?(%form_ann[:name])
-                  {{arg.restriction}}.new form_data[%form_ann[:name]]
-                elsif form_params.has_key?(:alias)
-                  {{arg.restriction}}.new form_data[%form_ann[:alias]]
-                end
+
               end
 
             {% elsif file_ann_shadowed = arg.annotation(Fossil::Param::File) %}
-              %file_ann = {{arg.annotation(Fossil::Param::File)}}
 
-              {% if !file_ann_shadowed.named_args.has_key?(:name) %}
-                %file_ann[:name] = {{arg.name.stringify}}
-              {% end %}
-
-              {{arg.internal_name.id}} = if form_data.has_key?(%file_ann[:name])
-                File.tempfile(form_data[%file_ann[:name]].filename || "upload") do |tmpfile|
-                  IO.copy(form_data[%file_ann[:name]].body, file)
+              begin
+              {% if file_ann_shadowed.named_args.has_key?(:name) %}
+                {{arg.internal_name.id}} = if form_data.has_key?({{arg.annotation(Fossil::Param::File)[:name]}})
+                  File.tempfile(form_data[{{arg.annotation(Fossil::Param::File)[:name]}}].filename || "upload") do |tmpfile|
+                    IO.copy(form_data[{{arg.annotation(Fossil::Param::File)[:name]}}].body, file)
+                  end
+                else
+                  nil
                 end
-              else
-                nil
+              {% else %}
+                {{arg.internal_name.id}} = if form_data.has_key?({{arg.name.stringify}})
+                  File.tempfile(form_data[{{arg.name.stringify}}].filename || "upload") do |tmpfile|
+                    IO.copy(form_data[{{arg.name.stringify}}].body, file)
+                  end
+                else
+                  nil
+                end
+              {% end %}
+              rescue
+                raise Fossil::Error::ParamParseError.new "Cannot parse file parameter #{{{arg.name.stringify}}}. Parameter's name in annotation has precedence."
               end
 
             {% end %}
