@@ -99,11 +99,14 @@ class Fossil::Router
       current = path
       path = ""
     end
-
-    @children.each do |child|
-      if child.path == current
-        return path == "" ? {child, path_params} : child.trace(path, path_params)
-      end
+    
+    candidates = @children.select { |child| child.path == current }
+    if candidates.size == 1
+      child = candidates[0]
+      return path == "" ? {child, path_params} : child.trace(path, path_params)
+    end
+    if @param_children.empty?
+      raise Fossil::Error::RouteTraceError.new "Unable to parse #{current + "/" + path}"
     end
 
     child = self
@@ -137,6 +140,9 @@ class Fossil::Router
 
     unless is_parsed
       raise Fossil::Error::RouteTraceError.new
+    end
+    if child.nil?
+      raise Fossil::Error::RouteTraceError.new "Nil child"
     end
     return path == "" ? {child, path_params} : child.trace(path, path_params)
   end
