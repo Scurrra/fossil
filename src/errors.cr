@@ -13,4 +13,11 @@ module Fossil::Error
       super(message)
     end
   end
+
+  # Error raised when router parameters cannot be parsed.
+  class ParamParseError < Exception
+    def initialize(message = "Cannot parse param")
+      super(message)
+    end
+  end
 end
