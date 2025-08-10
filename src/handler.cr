@@ -24,7 +24,7 @@ macro method_added(endpoint_fun)
               HTTP::FormData.parse(context.request) do |part|
                 if part.headers.includes_word?("Content-Disposition", "filename")
                   if filename = part.filename
-                    file_data[part.name] = File.tempfile(filename) do |file|
+                    file_data[part.name] = File.tempfile("::"+filename) do |file|
                       IO.copy(part.body, file)
                     end
                   end
@@ -246,17 +246,13 @@ macro method_added(endpoint_fun)
 
               begin
               {% if file_ann_shadowed.named_args.has_key?(:name) %}
-                {{arg.internal_name.id}} = if file_data.has_key?({{arg.annotation(Fossil::Param::File)[:name]}})
-                  file_data[{{arg.annotation(Fossil::Param::File)[:name]}}]
+                if file_data.has_key?({{arg.annotation(Fossil::Param::File)[:name]}})
+                  {{arg.internal_name.id}} = file_data[{{arg.annotation(Fossil::Param::File)[:name]}}]
                 else
-                  nil
+                  {{arg.internal_name.id}} = file_data[{{arg.name.stringify}}]
                 end
               {% else %}
-                {{arg.internal_name.id}} = if file_data.has_key?({{arg.name.stringify}})
-                  file_data[{{arg.name.stringify}}]
-                else
-                  nil
-                end
+                {{arg.internal_name.id}} = file_data[{{arg.name.stringify}}]
               {% end %}
               rescue
                 raise Fossil::Error::ParamParseError.new "Cannot parse file parameter #{{{arg.name.stringify}}}. Parameter's name in annotation has precedence."
