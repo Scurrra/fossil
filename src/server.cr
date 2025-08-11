@@ -1,6 +1,8 @@
 require "http/server"
 require "http/status"
 require "socket"
+require "json"
+require "uuid/json"
 
 require "./router"
 require "./handler"
@@ -35,8 +37,35 @@ class Fossil::Server
       rescue exception
         context.response.respond_with_status(HTTP::Status::INTERNAL_SERVER_ERROR, exception.to_s)
       else
-        context.response.content_type = "text/plain"
-        context.response.print response_data
+        if return_content_type = endpoint.return_content_type
+          begin
+            case return_content_type
+            when "text/plain"
+              context.response.print response_data
+            when "application/xml", "text/xml", "text/html"
+              #requires user to manually serialize before return
+              #so typeof(response_data) is String
+              context.response.print response_data
+            when "application/json"
+              context.response.print response_data.to_json
+            else
+              context.response.print response_data
+            end
+            
+            # if print fails no content type is set manually
+            context.response.content_type = return_content_type
+          rescue exception
+            
+          end
+        else
+          if response_data.responds_to?(:to_json)
+            context.response.content_type = "application/json"
+            context.response.print response_data.to_json
+          else
+            context.response.content_type = "text/plain"
+            context.response.print response_data
+          end
+        end
       end
     end
   end

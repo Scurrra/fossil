@@ -5,6 +5,11 @@ require "./errors"
 
 require "http/headers"
 
+# Annotation for forced return content type.
+#
+# Note: almost everytime default content type is "application/json".
+annotation ContentType end
+
 macro method_added(endpoint_fun)
   {% for m in {GET, POST, PUT, HEAD, DELETE, PATCH, OPTIONS} %}     
     {% for m_ in endpoint_fun.annotations(m) %}
@@ -13,7 +18,14 @@ macro method_added(endpoint_fun)
       %tmp_name = "Endpoint::%method"
       
       class Endpoint%tmp_name < Fossil::Endpoint
+        property return_content_type : String?
+
         def initialize
+          {% if endpoint_fun.annotation(ContentType) %}
+          @return_content_type = {{endpoint_fun.annotation(ContentType)[0]}}
+          {% else %}
+          @return_content_type = nil
+          {% end %}
         end
     
         def call(context : HTTP::Server::Context, path_params : Hash(String, Fossil::Param::PathParamType))
