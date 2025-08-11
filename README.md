@@ -20,6 +20,8 @@ Fossil is a simple framework for building APIs.
 require "fossil"
 ```
 
+A detailed guide can be found [here](http://localhost:4321/blog/fossil-guide/).
+
 ## TODO
 - Proper testing.
 - Better documentation.
