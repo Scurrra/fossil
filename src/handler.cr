@@ -29,6 +29,7 @@ macro method_added(endpoint_fun)
         end
     
         def call(context : HTTP::Server::Context, path_params : Hash(String, Fossil::Param::PathParamType))
+          is_body_parsed = false
           form_data = {} of String => String
           file_data = {} of String => File
           if context.request.headers.has_key? "Content-Type"
@@ -44,6 +45,7 @@ macro method_added(endpoint_fun)
                   form_data[part.name] = part.body.gets_to_end
                 end
               end
+              is_body_parsed = true
             end
           end
       
@@ -268,6 +270,50 @@ macro method_added(endpoint_fun)
               {% end %}
               rescue
                 raise Fossil::Error::ParamParseError.new "Cannot parse file parameter #{{{arg.name.stringify}}}. Parameter's name in annotation has precedence."
+              end
+
+            {% elsif body_ann_shadowed = arg.annotation(Fossil::Param::Body) %}
+              
+              if is_body_parsed
+                raise Fossil::Error::ParamParseError.new "Cannot parse body parameter #{{{arg.name.stringify}}}. Body has been already parsed."
+              end
+              unless context.request.headers.has_key? "Content-Type"
+                raise Fossil::Error::ParamParseError.new "Cannot parse body parameter #{{{arg.name.stringify}}}. Request does not have `Content-Type` header."
+              end
+
+              if body = context.request.body
+                begin
+                  case context.request.headers
+                  when .includes_word?("Content-Type", "application/json")
+                    {{arg.internal_name.id}} = {{arg.restriction}}.from_json body.gets_to_end
+                  when .includes_word?("Content-Type", "text/plain")
+                    {% if arg.restriction.stringify == "String" %}
+                  
+                    {{arg.internal_name.id}} = body.gets_to_end
+
+                    {% else %}
+
+                    raise Fossil::Error::ParamParseError.new "Cannot parse body parameter #{{{arg.name.stringify}}} of type #{{{arg.restriction.stringify}}}. Parsing from string is not suported, please parse string on your own."
+
+                    {% end %}
+                  else
+                    {% if arg.restriction.stringify == "String" %}
+                  
+                    {{arg.internal_name.id}} = body.gets_to_end
+
+                    {% else %}
+
+                    raise Fossil::Error::ParamParseError.new "Cannot parse body parameter #{{{arg.name.stringify}}} of type #{{{arg.restriction.stringify}}}. No parser available."
+
+                    {% end %}
+                  end
+                rescue exception : Fossil::Error::ParamParseError
+                  raise exception
+                rescue
+                  raise Fossil::Error::ParamParseError.new "Cannot parse body parameter #{{{arg.name.stringify}}}."
+                end
+              else
+                raise Fossil::Error::ParamParseError.new "Cannot parse body parameter #{{{arg.name.stringify}}}. No body provided."
               end
 
             {% end %}

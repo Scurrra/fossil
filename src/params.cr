@@ -31,4 +31,8 @@ module Fossil::Param
   # The annotation is examined for `:name` parameter,
   # if not provided the external name is used for searching for the value.
   annotation File; end
+
+  # Annotation for body parameter argument in an endpoint function.
+  # The body can be either xml, json or plain.
+  annotation Body; end
 end
