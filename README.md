@@ -28,7 +28,7 @@ A detailed guide can be found [here](https://scurrra.github.io/blog/fossil-guide
 
 ## Contributing
 
-1. Fork it (<https://github.com/your-github-user/fossil/fork>)
+1. Fork it (<https://github.com/Scurrra/fossil/fork>)
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
@@ -36,4 +36,4 @@ A detailed guide can be found [here](https://scurrra.github.io/blog/fossil-guide
 
 ## Contributors
 
-- [Scurrra](https://github.com/your-github-user) - creator and maintainer
+- [Scurrra](https://github.com/Scurrra) - creator and maintainer
