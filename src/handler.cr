@@ -13,8 +13,8 @@ annotation ContentType end
 macro method_added(endpoint_fun)
   {% for m in {GET, POST, PUT, HEAD, DELETE, PATCH, OPTIONS} %}     
     {% for m_ in endpoint_fun.annotations(m) %}
-      %method = {{ endpoint_fun.annotation(m).name.resolve.stringify }}
-      %route = {{ endpoint_fun.annotation(m)[0] }}
+      %method = {{ m_.name.resolve.stringify }}
+      %route = {{ m_[0] }}
       %tmp_name = "Endpoint::%method"
       
       class Endpoint%tmp_name < Fossil::Endpoint
@@ -50,7 +50,31 @@ macro method_added(endpoint_fun)
           end
       
           {% for arg in endpoint_fun.args %}
-            {% if path_ann_shadowed = arg.annotation(Fossil::Param::Path) %}
+            {% if headerdep_ann_shadowed = arg.annotation(Fossil::Param::HeaderDep) %}
+              
+              %header = {{arg.annotation(Fossil::Param::HeaderDep)[0]}}
+              unless context.request.headers.has_key?(%header)
+                raise Fossil::Error::HeaderDependencyNotFoundError.new
+              end
+              begin
+                {{arg.internal_name.id}} = {{arg.restriction}}.new context.request.headers[%header]
+              rescue
+                raise Fossil::Error::HeaderDependencyNotSatisfiedError.new
+              end
+            
+            {% elsif cookiedep_ann_shadowed = arg.annotation(Fossil::Param::CookieDep) %}
+              
+              %cookie = {{arg.annotation(Fossil::Param::CookieDep)[0]}}
+              unless context.request.cookies.has_key?(%cookie)
+                raise Fossil::Error::CookieDependencyNotFoundError.new
+              end
+              begin
+                {{arg.internal_name.id}} = {{arg.restriction}}.new context.request.cookies[%cookie].value
+              rescue
+                raise Fossil::Error::CookieDependencyNotSatisfiedError.new
+              end
+
+            {% elsif path_ann_shadowed = arg.annotation(Fossil::Param::Path) %}
               
               begin
               {% if path_ann_shadowed.named_args.has_key?(:name) %}

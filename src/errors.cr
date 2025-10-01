@@ -20,4 +20,32 @@ module Fossil::Error
       super(message)
     end
   end
+
+  # Error raised when cookie dependency is not found in cookies.
+  class CookieDependencyNotFoundError < Exception
+    def initialize(message = "Cookie Dependency Not Found")
+      super(message)
+    end
+  end
+
+  # Error raised when header dependency is not found in Headers.
+  class HeaderDependencyNotFoundError < Exception
+    def initialize(message = "Header Dependency Not Found")
+      super(message)
+    end
+  end
+
+  # Error raised when dependency can not be initialized from cookie value.
+  class CookieDependencyNotSatisfiedError < Exception
+    def initialize(message = "Cookie Dependency Not Satisfied")
+      super(message)
+    end
+  end
+
+  # Error raised when dependency can not be initialized from header value.
+  class HeaderDependencyNotSatisfiedError < Exception
+    def initialize(message = "Header Dependency Not Satisfied")
+      super(message)
+    end
+  end
 end

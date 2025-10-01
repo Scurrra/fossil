@@ -35,4 +35,16 @@ module Fossil::Param
   # Annotation for body parameter argument in an endpoint function.
   # The body can be either xml, json or plain.
   annotation Body; end
+
+  # Annotation for a header dependency.
+  #
+  # NOTE: the argument annotated with this annotation must have a constructor 
+  # that receives a string value as only argument, so it can not be of type String itself.
+  annotation HeaderDep; end
+
+  # Annotation for a Cookie dependency.
+  #
+  # NOTE: the argument annotated with this annotation must have a constructor 
+  # that receives a string value as only argument, so it can not be of type String itself.
+  annotation CookieDep; end
 end
