@@ -48,4 +48,12 @@ module Fossil::Error
       super(message)
     end
   end
+
+  # Error raised when ghost dependency's (dependency without parameters) 
+  # constructor raised an error.
+  class GhostDependencyInitializationError < Exception
+    def initialize(message = "Ghost Dependency Was Not Initialized")
+      super(message)
+    end
+  end
 end

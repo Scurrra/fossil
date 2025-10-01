@@ -74,6 +74,14 @@ macro method_added(endpoint_fun)
                 raise Fossil::Error::CookieDependencyNotSatisfiedError.new
               end
 
+            {% elsif cookiedep_ann_shadowed = arg.annotation(Fossil::Param::GhostDep) %}
+              
+              begin
+                {{arg.internal_name.id}} = {{arg.restriction}}.new
+              rescue
+                raise Fossil::Error::GhostDependencyInitializationError.new
+              end
+
             {% elsif path_ann_shadowed = arg.annotation(Fossil::Param::Path) %}
               
               begin

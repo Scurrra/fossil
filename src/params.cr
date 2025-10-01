@@ -47,4 +47,9 @@ module Fossil::Param
   # NOTE: the argument annotated with this annotation must have a constructor 
   # that receives a string value as only argument, so it can not be of type String itself.
   annotation CookieDep; end
+
+  # Annotation for a dependency with no construction parameters.
+  #
+  # NOTE: use it for singletons or classes with default behavior, like databse sessions.
+  annotation GhostDep; end
 end
