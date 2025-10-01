@@ -14,7 +14,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="fossil">
-  <title>Fossil::Error::RouteParamError - fossil 0.2.1</title>
+  <title>Fossil::Error::GhostDependencyInitializationError - fossil 0.2.1</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -87,7 +87,7 @@
       
     </li>
   
-  <li class=" " data-id="fossil/Fossil/Error/GhostDependencyInitializationError" data-name="fossil::error::ghostdependencyinitializationerror">
+  <li class=" current" data-id="fossil/Fossil/Error/GhostDependencyInitializationError" data-name="fossil::error::ghostdependencyinitializationerror">
       <a href="../../Fossil/Error/GhostDependencyInitializationError.html">GhostDependencyInitializationError</a>
       
     </li>
@@ -107,7 +107,7 @@
       
     </li>
   
-  <li class=" current" data-id="fossil/Fossil/Error/RouteParamError" data-name="fossil::error::routeparamerror">
+  <li class=" " data-id="fossil/Fossil/Error/RouteParamError" data-name="fossil::error::routeparamerror">
       <a href="../../Fossil/Error/RouteParamError.html">RouteParamError</a>
       
     </li>
@@ -213,12 +213,12 @@
 
   <span class="kind">
     class
-  </span> Fossil::<wbr>Error::<wbr>RouteParamError
+  </span> Fossil::<wbr>Error::<wbr>GhostDependencyInitializationError
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Fossil/Error/RouteParamError.html">Fossil::Error::RouteParamError</a></li><li class="superclass">Exception</li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Fossil/Error/GhostDependencyInitializationError.html">Fossil::Error::GhostDependencyInitializationError</a></li><li class="superclass">Exception</li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -232,7 +232,8 @@
     Overview
   </h2>
 
-  <p>Error raised when <code><a href="../../Fossil/Router.html#new%28path%3ANil%7CString%3Dnil%2Cparameter%3ANil%7CString%3Dnil%29-class-method">Fossil::Router.new</a></code> is misused.</p>
+  <p>Error raised when ghost dependency's (dependency without parameters)
+constructor raised an error.</p>
 
 
 
@@ -280,7 +281,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28message%3D%22Wrongrouteparameter%22%29-class-method" class="signature"><strong>.new</strong>(message = <span class="s">&quot;Wrong route parameter&quot;</span>)</a>
+        <a href="#new%28message%3D%22GhostDependencyWasNotInitialized%22%29-class-method" class="signature"><strong>.new</strong>(message = <span class="s">&quot;Ghost Dependency Was Not Initialized&quot;</span>)</a>
         
       </li>
     
@@ -347,12 +348,12 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(message=&quot;Wrongrouteparameter&quot;)-class-method">
+    <div class="entry-detail" id="new(message=&quot;GhostDependencyWasNotInitialized&quot;)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(message = <span class="s">&quot;Wrong route parameter&quot;</span>)
+        def self.<strong>new</strong>(message = <span class="s">&quot;Ghost Dependency Was Not Initialized&quot;</span>)
 
-        <a class="method-permalink" href="#new%28message%3D%22Wrongrouteparameter%22%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28message%3D%22GhostDependencyWasNotInitialized%22%29-class-method">#</a>
       </div>
       
       <br/>

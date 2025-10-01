@@ -14,7 +14,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="fossil">
-  <title>Fossil::Error::RouteParamError - fossil 0.2.1</title>
+  <title>Fossil::Param::GhostDep - fossil 0.2.1</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -72,7 +72,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="fossil/Fossil/Error" data-name="fossil::error">
+  <li class="parent " data-id="fossil/Fossil/Error" data-name="fossil::error">
       <a href="../../Fossil/Error.html">Error</a>
       
         <ul>
@@ -107,7 +107,7 @@
       
     </li>
   
-  <li class=" current" data-id="fossil/Fossil/Error/RouteParamError" data-name="fossil::error::routeparamerror">
+  <li class=" " data-id="fossil/Fossil/Error/RouteParamError" data-name="fossil::error::routeparamerror">
       <a href="../../Fossil/Error/RouteParamError.html">RouteParamError</a>
       
     </li>
@@ -127,7 +127,7 @@
       
     </li>
   
-  <li class="parent " data-id="fossil/Fossil/Param" data-name="fossil::param">
+  <li class="parent open current" data-id="fossil/Fossil/Param" data-name="fossil::param">
       <a href="../../Fossil/Param.html">Param</a>
       
         <ul>
@@ -152,7 +152,7 @@
       
     </li>
   
-  <li class=" " data-id="fossil/Fossil/Param/GhostDep" data-name="fossil::param::ghostdep">
+  <li class=" current" data-id="fossil/Fossil/Param/GhostDep" data-name="fossil::param::ghostdep">
       <a href="../../Fossil/Param/GhostDep.html">GhostDep</a>
       
     </li>
@@ -212,13 +212,11 @@
 <h1 class="type-name">
 
   <span class="kind">
-    class
-  </span> Fossil::<wbr>Error::<wbr>RouteParamError
+    annotation
+  </span> Fossil::<wbr>Param::<wbr>GhostDep
 
 </h1>
 
-
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Fossil/Error/RouteParamError.html">Fossil::Error::RouteParamError</a></li><li class="superclass">Exception</li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -232,7 +230,8 @@
     Overview
   </h2>
 
-  <p>Error raised when <code><a href="../../Fossil/Router.html#new%28path%3ANil%7CString%3Dnil%2Cparameter%3ANil%7CString%3Dnil%29-class-method">Fossil::Router.new</a></code> is misused.</p>
+  <p>Annotation for a dependency with no construction parameters.</p>
+<p><span class="flag purple">NOTE</span>  use it for singletons or classes with default behavior, like databse sessions.</p>
 
 
 
@@ -259,7 +258,7 @@
   </h2>
   
     
-      errors.cr
+      params.cr
     
     <br/>
   
@@ -269,23 +268,6 @@
 
 
   
-  <h2>
-    <a id="constructors" class="anchor" href="#constructors">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Constructors
-  </h2>
-  <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#new%28message%3D%22Wrongrouteparameter%22%29-class-method" class="signature"><strong>.new</strong>(message = <span class="s">&quot;Wrong route parameter&quot;</span>)</a>
-        
-      </li>
-    
-  </ul>
-
 
   
 
@@ -296,72 +278,9 @@
 
   <div class="methods-inherited">
     
-      
-
-
-      
-
-
-      
-
-
-      
-
-
-    
-      
-
-
-      
-
-
-      
-
-
-      
-
-
-    
-      
-
-
-      
-
-
-      
-
-
-      
-
-
-    
   </div>
 
   
-  <h2>
-    <a id="constructor-detail" class="anchor" href="#constructor-detail">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Constructor Detail
-  </h2>
-  
-    <div class="entry-detail" id="new(message=&quot;Wrongrouteparameter&quot;)-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(message = <span class="s">&quot;Wrong route parameter&quot;</span>)
-
-        <a class="method-permalink" href="#new%28message%3D%22Wrongrouteparameter%22%29-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-
 
   
 
