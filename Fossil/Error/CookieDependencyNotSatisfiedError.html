@@ -14,7 +14,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="fossil">
-  <title>Fossil::Param::PathParamType - fossil 0.2.0</title>
+  <title>Fossil::Error::CookieDependencyNotSatisfiedError - fossil 0.2.0</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -72,7 +72,7 @@
       
     </li>
   
-  <li class="parent " data-id="fossil/Fossil/Error" data-name="fossil::error">
+  <li class="parent open current" data-id="fossil/Fossil/Error" data-name="fossil::error">
       <a href="../../Fossil/Error.html">Error</a>
       
         <ul>
@@ -82,7 +82,7 @@
       
     </li>
   
-  <li class=" " data-id="fossil/Fossil/Error/CookieDependencyNotSatisfiedError" data-name="fossil::error::cookiedependencynotsatisfiederror">
+  <li class=" current" data-id="fossil/Fossil/Error/CookieDependencyNotSatisfiedError" data-name="fossil::error::cookiedependencynotsatisfiederror">
       <a href="../../Fossil/Error/CookieDependencyNotSatisfiedError.html">CookieDependencyNotSatisfiedError</a>
       
     </li>
@@ -122,7 +122,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="fossil/Fossil/Param" data-name="fossil::param">
+  <li class="parent " data-id="fossil/Fossil/Param" data-name="fossil::param">
       <a href="../../Fossil/Param.html">Param</a>
       
         <ul>
@@ -157,7 +157,7 @@
       
     </li>
   
-  <li class=" current" data-id="fossil/Fossil/Param/PathParamType" data-name="fossil::param::pathparamtype">
+  <li class=" " data-id="fossil/Fossil/Param/PathParamType" data-name="fossil::param::pathparamtype">
       <a href="../../Fossil/Param/PathParamType.html">PathParamType</a>
       
     </li>
@@ -202,11 +202,13 @@
 <h1 class="type-name">
 
   <span class="kind">
-    alias
-  </span> Fossil::<wbr>Param::<wbr>PathParamType
+    class
+  </span> Fossil::<wbr>Error::<wbr>CookieDependencyNotSatisfiedError
 
 </h1>
 
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Fossil/Error/CookieDependencyNotSatisfiedError.html">Fossil::Error::CookieDependencyNotSatisfiedError</a></li><li class="superclass">Exception</li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -220,19 +222,9 @@
     Overview
   </h2>
 
-  <p>Union of possible types of path parameters.</p>
+  <p>Error raised when dependency can not be initialized from cookie value.</p>
 
 
-
-  <h2>
-    <a id="alias-definition" class="anchor" href="#alias-definition">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Alias Definition
-  </h2>
-  <code>Int32 | String | UUID</code>
 
 
 
@@ -257,7 +249,7 @@
   </h2>
   
     
-      params.cr
+      errors.cr
     
     <br/>
   
@@ -267,6 +259,23 @@
 
 
   
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28message%3D%22CookieDependencyNotSatisfied%22%29-class-method" class="signature"><strong>.new</strong>(message = <span class="s">&quot;Cookie Dependency Not Satisfied&quot;</span>)</a>
+        
+      </li>
+    
+  </ul>
+
 
   
 
@@ -277,9 +286,72 @@
 
   <div class="methods-inherited">
     
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
   </div>
 
   
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(message=&quot;CookieDependencyNotSatisfied&quot;)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(message = <span class="s">&quot;Cookie Dependency Not Satisfied&quot;</span>)
+
+        <a class="method-permalink" href="#new%28message%3D%22CookieDependencyNotSatisfied%22%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
 
   
 

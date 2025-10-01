@@ -14,7 +14,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="fossil">
-  <title>Fossil::Param::PathParamType - fossil 0.2.0</title>
+  <title>Fossil::Param::HeaderDep - fossil 0.2.0</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -147,7 +147,7 @@
       
     </li>
   
-  <li class=" " data-id="fossil/Fossil/Param/HeaderDep" data-name="fossil::param::headerdep">
+  <li class=" current" data-id="fossil/Fossil/Param/HeaderDep" data-name="fossil::param::headerdep">
       <a href="../../Fossil/Param/HeaderDep.html">HeaderDep</a>
       
     </li>
@@ -157,7 +157,7 @@
       
     </li>
   
-  <li class=" current" data-id="fossil/Fossil/Param/PathParamType" data-name="fossil::param::pathparamtype">
+  <li class=" " data-id="fossil/Fossil/Param/PathParamType" data-name="fossil::param::pathparamtype">
       <a href="../../Fossil/Param/PathParamType.html">PathParamType</a>
       
     </li>
@@ -202,8 +202,8 @@
 <h1 class="type-name">
 
   <span class="kind">
-    alias
-  </span> Fossil::<wbr>Param::<wbr>PathParamType
+    annotation
+  </span> Fossil::<wbr>Param::<wbr>HeaderDep
 
 </h1>
 
@@ -220,19 +220,11 @@
     Overview
   </h2>
 
-  <p>Union of possible types of path parameters.</p>
+  <p>Annotation for a header dependency.</p>
+<p><span class="flag purple">NOTE</span>  the argument annotated with this annotation must have a constructor
+that receives a string value as only argument, so it can not be of type String itself.</p>
 
 
-
-  <h2>
-    <a id="alias-definition" class="anchor" href="#alias-definition">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Alias Definition
-  </h2>
-  <code>Int32 | String | UUID</code>
 
 
 
