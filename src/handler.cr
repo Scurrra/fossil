@@ -155,7 +155,11 @@ macro method_added(endpoint_fun)
             
               {% end %}
               rescue
+                {% unless arg.default_value %}
                 raise Fossil::Error::ParamParseError.new "Cannot parse query parameter #{{{arg.name.stringify}}}."
+                {% else %}
+                {{arg.internal_name.id}} = {{arg.default_value}}
+                {% end %}
               end
             
             {% elsif form_ann_shadowed = arg.annotation(Fossil::Param::Form) %}
@@ -221,7 +225,11 @@ macro method_added(endpoint_fun)
             
                 {% end %}
                 rescue
+                  {% unless arg.default_value %}
                   raise Fossil::Error::ParamParseError.new "Cannot parse form parameter #{{{arg.name.stringify}}}."
+                  {% else %}
+                  {{arg.internal_name.id}} = {{arg.default_value}}
+                  {% end %}
                 end
 
               else
@@ -283,7 +291,11 @@ macro method_added(endpoint_fun)
                 {% end %}
 
                 rescue
+                  {% unless arg.default_value %}
                   raise Fossil::Error::ParamParseError.new "Cannot parse form parameter #{{{arg.name.stringify}}}."
+                  {% else %}
+                  {{arg.internal_name.id}} = {{arg.default_value}}
+                  {% end %}
                 end
 
               end
