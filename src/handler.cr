@@ -360,6 +360,8 @@ macro method_added(endpoint_fun)
                 raise Fossil::Error::ParamParseError.new "Cannot parse body parameter #{{{arg.name.stringify}}}. No body provided."
               end
 
+            {% else %}
+              raise Fossil::Error::UnspecifiedParamError.new "Param #{{{arg.name.stringify}}} is not specified. Provide `Fossil::Param::` annotation to the parameter."
             {% end %}
           {% end %}
 

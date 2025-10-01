@@ -21,6 +21,14 @@ module Fossil::Error
     end
   end
 
+  # Error raised when router parameter's is unspecified 
+  # (no param annotation provided).
+  class UnspecifiedParamError < Exception
+    def initialize(message = "Unspecified parameter.")
+      super(message)
+    end
+  end
+
   # Error raised when cookie dependency is not found in cookies.
   class CookieDependencyNotFoundError < Exception
     def initialize(message = "Cookie Dependency Not Found")
